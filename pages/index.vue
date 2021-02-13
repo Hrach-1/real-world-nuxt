@@ -3,7 +3,7 @@
     <h1>Events</h1>
 
     <event-card
-      v-for="(evnet, index) in evnets"
+      v-for="(event, index) in events"
       :key="index"
       :event="event"
       :data-index="index"
@@ -22,7 +22,7 @@ export default {
   },
   asyncData({ $axios, error }) {
     return $axios
-      .get('http://localhost:3000/events')
+      .get('https://my-json-server.typicode.com/Hrach-1/real-world-nuxt/events')
       .then(response => {
         return {
           events: response.data
