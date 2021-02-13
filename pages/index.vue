@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import EventCard from '../components/EventCard.vue'
 export default {
   components: { EventCard },
@@ -20,21 +22,18 @@ export default {
       title: 'Event Listing'
     }
   },
-  async asyncData({ $axios, error }) {
+  async fetch({ store, error }) {
     try {
-      const { data } = await $axios.get(
-        'https://my-json-server.typicode.com/Hrach-1/real-world-nuxt/events'
-      )
-
-      return {
-        events: data
-      }
+      await store.dispatch('events/fetchEvents')
     } catch (e) {
       error({
         statusCode: 503,
         message: 'Unable to fetch events at this time. Please try again.'
       })
     }
-  }
+  },
+  computed: mapState({
+    events: state => state.events.events
+  })
 }
 </script>
